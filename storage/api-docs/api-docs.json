@@ -83,7 +83,7 @@
                 }
             }
         },
-        "/api/products": {
+        "/api/v1/products": {
             "get": {
                 "tags": [
                     "Products"
@@ -219,7 +219,7 @@
                 ]
             }
         },
-        "/api/products/{id}": {
+        "/api/v1/products/{id}": {
             "get": {
                 "tags": [
                     "Products"
