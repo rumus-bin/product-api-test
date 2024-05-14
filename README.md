@@ -70,6 +70,13 @@ If you cannot access the documentation after deploying the project, try regenera
 ```bash
   ./vendor/bin/sail artisan l5-swagger:generate
 ```
+
+## Testing ##
+To run the test suite, execute the following command:
+```bash
+  ./vendor/bin/sail test
+```
+
 ### Additional Notes ###
 - The application uses the Laravel Sail package to manage Docker containers.
 - You can access the running Docker containers using vendor/bin/sail {console command} or by directly logging into the Docker container.
