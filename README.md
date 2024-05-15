@@ -7,6 +7,17 @@ This application is built using the Laravel version 10 framework and Docker envi
 - User authorization logic using Laravel Sanctum functionality.
 - A routing system with both public routes and routes protected by authorization logic.
 
+### Repository Pattern
+
+This project uses the Repository design pattern to separate responsibilities in application logic classes. The Repository pattern helps in encapsulating the data access logic, making the code more modular, testable, and maintainable. By defining repository interfaces and implementing them, the application can interact with data storage through a consistent API, while keeping the business logic in controllers and services clean and focused.
+
+#### Benefits of Using Repository Pattern
+
+- **Separation of Concerns:** Isolates the data access layer from the business logic layer.
+- **Ease of Maintenance:** Simplifies maintenance by providing a single source of truth for data access logic.
+- **Improved Testability:** Makes it easier to mock repositories for unit testing.
+- **Flexibility:** Allows switching between different data sources or ORMs with minimal changes to the business logic.
+
 ## Authorization
 
 To gain access to protected routes, HTTP requests must include the `Authorization` header with the value `Bearer {token}`.
