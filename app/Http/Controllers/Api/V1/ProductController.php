@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Repositories\ProductRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
@@ -13,7 +15,7 @@ use OpenApi\Annotations as OA;
  * @OA\Info(
  *      version="1.0.0",
  *      title="API Documentation",
- *      description="L5 Swagger OpenApi description",
+ *      description="Product API Documentation",
  *      @OA\Contact(
  *          email="support@example.com"
  *      ),
@@ -21,6 +23,10 @@ use OpenApi\Annotations as OA;
  */
 class ProductController extends Controller
 {
+    public function __construct(private ProductRepository $productRepository)
+    {
+    }
+
     /**
      * @OA\Get(
      *     path="/api/v1/products",
@@ -90,11 +96,7 @@ class ProductController extends Controller
         $page = $request->query('page', 1);
         $perPage = $request->query('per_page', 10);
 
-        $user = auth()->user();
-
-        $stop = 1;
-
-        return new ProductCollection(Product::paginate($perPage, ['*'], 'page', $page));
+        return new ProductCollection($this->productRepository->getAllPaginated($perPage, page: $page));
     }
 
     /**
@@ -140,8 +142,14 @@ class ProductController extends Controller
      *     }
      * )
      */
-    public function get($id): ProductResource
+    public function get($id): ProductResource|JsonResponse
     {
-        return new ProductResource(Product::findOrFail($id));
+        $product = $this->productRepository->findById($id);
+
+        if (!$product) {
+            return response()->json(['message' => 'Product not found'], 404);
+        }
+
+        return new ProductResource($product);
     }
 }
